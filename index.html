@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0,
+      maximum-scale=1.0, user-scalable=no">
+
+<title>Cidade Alta Phone</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  background: #111;
+  font-family: -apple-system, BlinkMacSystemFont,
+               "SF Pro Display", Arial, sans-serif;
+  color: #fff;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  border: 0;
+  cursor: pointer;
+}
+
+#phone {
+  width: 100%;
+  max-width: 430px;
+  min-height: 100vh;
+  margin: auto;
+  background: #f5f5f7;
+  color: #111;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.status {
+  height: 42px;
+  padding: 13px 22px 0;
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.home {
+  min-height: calc(100vh - 42px);
+  padding: 25px 20px;
+  background:
+    linear-gradient(135deg, #171717, #303030);
+}
+
+.wallpaper {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+}
+
+.app-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px 15px;
+  margin-top: 40px;
+}
+
+.app {
+  text-align: center;
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.icon {
+  width: 62px;
+  height: 62px;
+  border-radius: 17px;
+  margin: auto auto 7px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  box-shadow: 0 5px 15px #0007;
+}
+
+.olx {
+  background: #fff;
+  color: #168b00;
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.whatsapp {
+  background: #25d366;
+}
+
+.settings {
+  background: #777;
+}
+
+.account {
+  background: #222;
+}
+
+.dock {
+  position: fixed;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 38px);
+  max-width: 390px;
+  height: 82px;
+  border-radius: 28px;
+  background: #ffffff30;
+  backdrop-filter: blur(25px);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.screen {
+  display: none;
+  min-height: 100vh;
+  background: #f5f5f7;
+}
+
+.screen.active {
+  display: block;
+}
+
+.header {
+  height: 62px;
+  display: flex;
+  align-items: center;
+  padding: 0 18px;
+  border-bottom: 1px solid #ddd;
+  background: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.back {
+  background: none;
+  color: #007aff;
+  font-size: 28px;
+}
+
+.header-title {
+  flex: 1;
+  text-align: center;
+  font-size: 19px;
+  font-weight: 700;
+  margin-right: 30px;
+}
+
+.content {
+  padding: 18px;
+}
+
+.search {
+  width: 100%;
+  padding: 13px 15px;
+  border: 0;
+  border-radius: 13px;
+  background: #e5e5ea;
+  outline: none;
+  margin-bottom: 15px;
+}
+
+.primary {
+  width: 100%;
+  padding: 14px;
+  border-radius: 13px;
+  background: #007aff;
+  color: white;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.ad {
+  background: white;
+  border-radius: 17px;
+  margin-bottom: 14px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px #00000012;
+}
+
+.ad-image {
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+  background: #ddd;
+}
+
+.ad-body {
+  padding: 14px;
+}
+
+.ad-title {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.price {
+  font-size: 20px;
+  font-weight: 800;
+  margin: 6px 0;
+}
+
+.seller {
+  color: #777;
+  font-size: 13px;
+}
+
+.chat-button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  background: #25d366;
+  color: white;
+  font-weight: 700;
+  margin-top: 12px;
+}
+
+.empty {
+  text-align: center;
+  color: #777;
+  padding: 70px 20px;
+}
+
+.form input,
+.form textarea,
+.form select {
+  width: 100%;
+  padding: 13px;
+  margin-bottom: 12px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background: white;
+  outline: none;
+}
+
+.form textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.account-card {
+  background: white;
+  border-radius: 18px;
+  padding: 22px;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.big-id {
+  font-size: 42px;
+  font-weight: 900;
+  color: #007aff;
+  margin: 10px;
+}
+
+.chat-list {
+  padding-bottom: 80px;
+}
+
+.chat-head {
+  background: #25d366;
+  color: white;
+  padding: 18px;
+}
+
+.messages {
+  padding: 15px;
+  min-height: calc(100vh - 160px);
+  background: #e5ddd5;
+}
+
+.msg {
+  max-width: 78%;
+  padding: 10px 13px;
+  margin: 7px 0;
+  border-radius: 15px;
+  word-wrap: break-word;
+}
+
+.mine {
+  margin-left: auto;
+  background: #d9ffc7;
+}
+
+.theirs {
+  background: white;
+}
+
+.chat-input {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 430px;
+  width: 100%;
+  padding: 10px;
+  background: white;
+  display: flex;
+  gap: 8px;
+}
+
+.chat-input input {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+}
+
+.send {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: #25d366;
+  color: white;
+}
+
+.login {
+  min-height: 100vh;
+  background: linear-gradient(145deg, #111, #333);
+  padding: 55px 25px;
+  color: white;
+}
+
+.logo {
+  text-align: center;
+  font-size: 32px;
+  font-weight: 900;
+  margin-bottom: 40px;
+}
+
+.login-box {
+  background: #ffffff12;
+  backdrop-filter: blur(20px);
+  padding: 22px;
+  border-radius: 25px;
+}
+
+.login-box input {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 12px;
+  border: 0;
+  border-radius: 13px;
+  outline: none;
+}
+
+.login-box button {
+  width: 100%;
+  padding: 14px;
+  border-radius: 13px;
+  background: #007aff;
+  color: white;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.link {
+  background: transparent !important;
+  color: #58aaff !important;
+}
+
+.hidden {
+  display: none !important;
+}
+</style>
+</head>
+
+<body>
+
+<div id="phone">
+
+<!-- LOGIN -->
+
+<div id="loginScreen" class="login">
+
+  <div class="logo">
+    📱 Cidade Alta
+  </div>
+
+  <div class="login-box">
+
+    <div id="loginForm">
+
+      <h2>Entrar</h2>
+
+      <input
+        id="loginID"
+        type="number"
+        placeholder="Seu ID">
+
+      <input
+        id="loginPassword"
+        type="password"
+        placeholder="Senha">
+
+      <button onclick="login()">
+        Entrar
+      </button>
+
+      <button
+        class="link"
+        onclick="showRegister()">
+        Criar conta
+      </button>
+
+    </div>
+
+    <div id="registerForm" class="hidden">
+
+      <h2>Criar conta</h2>
+
+      <input
+        id="registerName"
+        placeholder="Seu nome">
+
+      <input
+        id="registerPassword"
+        type="password"
+        placeholder="Senha">
+
+      <button onclick="register()">
+        Criar conta
+      </button>
+
+      <button
+        class="link"
+        onclick="showLogin()">
+        Já tenho conta
+      </button>
+
+    </div>
+
+    <p id="loginError"></p>
+
+  </div>
+</div>
+
+<!-- HOME -->
+
+<div id="homeScreen" class="hidden">
+
+  <div class="status">
+    <span id="clock">12:00</span>
+    <span>📶 🔋</span>
+  </div>
+
+  <div class="home">
+
+    <div class="app-grid">
+
+      <div class="app" onclick="openApp('olx')">
+        <div class="icon olx">OLX</div>
+        OLX
+      </div>
+
+      <div class="app" onclick="openApp('whatsapp')">
+        <div class="icon whatsapp">💬</div>
+        WhatsZAP
+      </div>
+
+      <div class="app" onclick="openApp('account')">
+        <div class="icon account">👤</div>
+        Conta
+      </div>
+
+      <div class="app" onclick="openApp('settings')">
+        <div class="icon settings">⚙️</div>
+        Ajustes
+      </div>
+
+    </div>
+
+    <div class="dock">
+      <div class="app" onclick="openApp('olx')">
+        <div class="icon olx">OLX</div>
+      </div>
+
+      <div class="app" onclick="openApp('whatsapp')">
+        <div class="icon whatsapp">💬</div>
+      </div>
+
+      <div class="app" onclick="openApp('account')">
+        <div class="icon account">👤</div>
+      </div>
+
+      <div class="app" onclick="openApp('settings')">
+        <div class="icon settings">⚙️</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- OLX -->
+
+<div id="olxScreen" class="screen">
+
+  <div class="header">
+
+    <button class="back" onclick="goHome()">
+      ‹
+    </button>
+
+    <div class="header-title">
+      OLX
+    </div>
+
+  </div>
+
+  <div class="content">
+
+    <input
+      class="search"
+      id="search"
+      placeholder="🔎 Buscar na OLX..."
+      oninput="loadAds()">
+
+    <button
+      class="primary"
+      onclick="showAdForm()">
+      + Criar anúncio
+    </button>
+
+    <div id="ads"></div>
+
+  </div>
+</div>
+
+<!-- CRIAR ANÚNCIO -->
+
+<div id="adFormScreen" class="screen">
+
+  <div class="header">
+
+    <button class="back" onclick="openApp('olx')">
+      ‹
+    </button>
+
+    <div class="header-title">
+      Novo anúncio
+    </div>
+
+  </div>
+
+  <div class="content form">
+
+    <input
+      id="adTitle"
+      placeholder="Título do anúncio">
+
+    <input
+      id="adPrice"
+      type="number"
+      placeholder="Preço">
+
+    <select id="adCategory">
+
+      <option value="">
+        Categoria
+      </option>
+
+      <option>Celulares</option>
+      <option>Computadores</option>
+      <option>Games</option>
+      <option>Veículos</option>
+      <option>Roupas</option>
+      <option>Outros</option>
+
+    </select>
+
+    <textarea
+      id="adDescription"
+      placeholder="Descrição"></textarea>
+
+    <input
+      id="adImage"
+      placeholder="URL da imagem (opcional)">
+
+    <button
+      class="primary"
+      onclick="createAd()">
+      Publicar anúncio
+    </button>
+
+  </div>
+</div>
+
+<!-- WHATSZAP -->
+
+<div id="whatsappScreen" class="screen">
+
+  <div class="header">
+
+    <button class="back" onclick="goHome()">
+      ‹
+    </button>
+
+    <div class="header-title">
+      WhatsZAP
+    </div>
+
+  </div>
+
+  <div class="content">
+
+    <div id="chatList" class="chat-list">
+      <div class="empty">
+        Suas conversas aparecerão aqui.
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- CHAT -->
+
+<div id="chatScreen" class="screen">
+
+  <div class="header">
+
+    <button class="back" onclick="openApp('whatsapp')">
+      ‹
+    </button>
+
+    <div
+      id="chatTitle"
+      class="header-title">
+      Conversa
+    </div>
+
+  </div>
+
+  <div
+    id="messages"
+    class="messages">
+  </div>
+
+  <div class="chat-input">
+
+    <input
+      id="messageInput"
+      placeholder="Mensagem..."
+      onkeydown="if(event.key==='Enter')sendMessage()">
+
+    <button
+      class="send"
+      onclick="sendMessage()">
+      ➤
+    </button>
+
+  </div>
+
+</div>
+
+<!-- CONTA -->
+
+<div id="accountScreen" class="screen">
+
+  <div class="header">
+
+    <button class="back" onclick="goHome()">
+      ‹
+    </button>
+
+    <div class="header-title">
+      Conta
+    </div>
+
+  </div>
+
+  <div class="content">
+
+    <div class="account-card">
+
+      <div>Seu ID</div>
+
+      <div
+        id="myID"
+        class="big-id">
+        ----
+      </div>
+
+      <div id="myName"></div>
+
+    </div>
+
+    <button
+      class="primary"
+      onclick="logout()">
+      Sair da conta
+    </button>
+
+  </div>
+
+</div>
+
+<!-- AJUSTES -->
+
+<div id="settingsScreen" class="screen">
+
+  <div class="header">
+
+    <button class="back" onclick="goHome()">
+      ‹
+    </button>
+
+    <div class="header-title">
+      Ajustes
+    </div>
+
+  </div>
+
+  <div class="content">
+
+    <div class="account-card">
+      📱 Cidade Alta Phone
+      <br><br>
+      Sistema fictício da Cidade Alta.
+    </div>
+
+  </div>
+
+</div>
+
+</div>
+
+<script>
+let token = localStorage.getItem("ca_token");
+let user = JSON.parse(
+  localStorage.getItem("ca_user") || "null"
+);
+
+let currentChat = null;
+
+function api(url, options = {}) {
+  options.headers = {
+    ...(options.headers || {}),
+    "Content-Type": "application/json"
+  };
+
+  if (token) {
+    options.headers.Authorization =
+      "Bearer " + token;
+  }
+
+  return fetch(url, options);
+}
+
+function showRegister() {
+  document
+    .getElementById("loginForm")
+    .classList.add("hidden");
+
+  document
+    .getElementById("registerForm")
+    .classList.remove("hidden");
+}
+
+function showLogin() {
+  document
+    .getElementById("registerForm")
+    .classList.add("hidden");
+
+  document
+    .getElementById("loginForm")
+    .classList.remove("hidden");
+}
+
+async function register() {
+
+  const name =
+    document.getElementById("registerName").value;
+
+  const password =
+    document.getElementById("registerPassword").value;
+
+  const response = await api(
+    "/api/register",
+    {
+      method: "POST",
+      body: JSON.stringify({
+        name,
+        password
+      })
+    }
+  );
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    return alert(data.error);
+  }
+
+  token = data.token;
+  user = data.user;
+
+  saveLogin();
+
+  alert(
+    "Conta criada!\n\nSeu ID é: " +
+    user.id
+  );
+
+  start();
+}
+
+async function login() {
+
+  const id =
+    document.getElementById("loginID").value;
+
+  const password =
+    document.getElementById("loginPassword").value;
+
+  const response = await api(
+    "/api/login",
+    {
+      method: "POST",
+      body: JSON.stringify({
+        id,
+        password
+      })
+    }
+  );
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    return alert(data.error);
+  }
+
+  token = data.token;
+  user = data.user;
+
+  saveLogin();
+
+  start();
+}
+
+function saveLogin() {
+  localStorage.setItem(
+    "ca_token",
+    token
+  );
+
+  localStorage.setItem(
+    "ca_user",
+    JSON.stringify(user)
+  );
+}
+
+function start() {
+
+  document
+    .getElementById("loginScreen")
+    .classList.add("hidden");
+
+  document
+    .getElementById("homeScreen")
+    .classList.remove("hidden");
+
+  document.getElementById("myID").textContent =
+    user.id;
+
+  document.getElementById("myName").textContent =
+    user.name;
+
+  updateClock();
+}
+
+function updateClock() {
+
+  const now = new Date();
+
+  document.getElementById("clock")
+    .textContent =
+      now.toLocaleTimeString(
+        "pt-BR",
+        {
+          hour: "2-digit",
+          minute: "2-digit"
+        }
+      );
+}
+
+setInterval(updateClock, 1000);
+
+function hideScreens() {
+
+  document
+    .querySelectorAll(".screen")
+    .forEach(s =>
+      s.classList.remove("active")
+    );
+
+  document
+    .getElementById("homeScreen")
+    .classList.add("hidden");
+}
+
+function openApp(app) {
+
+  hideScreens();
+
+  const screen =
+    document.getElementById(
+      app + "Screen"
+    );
+
+  if (!screen) return;
+
+  screen.classList.add("active");
+
+  if (app === "olx") {
+    loadAds();
+  }
+
+  if (app === "whatsapp") {
+    loadChats();
+  }
+}
+
+function goHome() {
+
+  document
+    .querySelectorAll(".screen")
+    .forEach(s =>
+      s.classList.remove("active")
+    );
+
+  document
+    .getElementById("homeScreen")
+    .classList.remove("hidden");
+}
+
+async function loadAds() {
+
+  const q =
+    document.getElementById("search")?.value || "";
+
+  const response =
+    await api(
+      "/api/ads?q=" +
+      encodeURIComponent(q)
+    );
+
+  const ads = await response.json();
+
+  const container =
+    document.getElementById("ads");
+
+  container.innerHTML = "";
+
+  if (!ads.length) {
+
+    container.innerHTML = `
+      <div class="empty">
+        🛍️<br><br>
+        Nenhum anúncio publicado.
+      </div>
+    `;
+
+    return;
+  }
+
+  ads.forEach(ad => {
+
+    const div =
+      document.createElement("div");
+
+    div.className = "ad";
+
+    div.innerHTML = `
+      ${
+        ad.image
+        ? `<img class="ad-image"
+                src="${escapeHTML(ad.image)}">`
+        : ""
+      }
+
+      <div class="ad-body">
+
+        <div class="ad-title">
+          ${escapeHTML(ad.title)}
+        </div>
+
+        <div class="price">
+          R$ ${Number(ad.price)
+            .toLocaleString("pt-BR",
+            {minimumFractionDigits: 2})}
+        </div>
+
+        <div class="seller">
+          ${escapeHTML(ad.category)}
+          <br>
+          Vendedor:
+          ${escapeHTML(ad.seller_name)}
+          · ID ${ad.seller_id}
+        </div>
+
+        <p>
+          ${escapeHTML(ad.description || "")}
+        </p>
+
+        <button
+          class="chat-button"
+          onclick="openChat(${ad.seller_id},
+                            '${escapeJS(ad.seller_name)}')">
+          💬 Conversar com vendedor
+        </button>
+
+      </div>
+    `;
+
+    container.appendChild(div);
+  });
+}
+
+function showAdForm() {
+
+  document
+    .querySelectorAll(".screen")
+    .forEach(s =>
+      s.classList.remove("active")
+    );
+
+  document
+    .getElementById("adFormScreen")
+    .classList.add("active");
+}
+
+async function createAd() {
+
+  const title =
+    document.getElementById("adTitle").value;
+
+  const price =
+    document.getElementById("adPrice").value;
+
+  const category =
+    document.getElementById("adCategory").value;
+
+  const description =
+    document.getElementById("adDescription").value;
+
+  const image =
+    document.getElementById("adImage").value;
+
+  const response =
+    await api(
+      "/api/ads",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          title,
+          price,
+          category,
+          description,
+          image
+        })
+      }
+    );
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    return alert(data.error);
+  }
+
+  alert("Anúncio publicado!");
+
+  document.getElementById("adTitle").value = "";
+  document.getElementById("adPrice").value = "";
+  document.getElementById("adCategory").value = "";
+  document.getElementById("adDescription").value = "";
+  document.getElementById("adImage").value = "";
+
+  openApp("olx");
+}
+
+function openChat(id, name) {
+
+  currentChat = id;
+
+  document.getElementById("chatTitle")
+    .textContent =
+      name + " · " + id;
+
+  hideScreens();
+
+  document
+    .getElementById("chatScreen")
+    .classList.add("active");
+
+  loadMessages();
+}
+
+async function loadMessages() {
+
+  if (!currentChat) return;
+
+  const response =
+    await api(
+      "/api/messages/" +
+      currentChat
+    );
+
+  const messages =
+    await response.json();
+
+  const container =
+    document.getElementById("messages");
+
+  container.innerHTML = "";
+
+  messages.forEach(message => {
+
+    const div =
+      document.createElement("div");
+
+    div.className =
+      "msg " +
+      (
+        Number(message.sender_id) ===
+        Number(user.id)
+          ? "mine"
+          : "theirs"
+      );
+
+    div.textContent = message.text;
+
+    container.appendChild(div);
+  });
+
+  container.scrollTop =
+    container.scrollHeight;
+}
+
+async function sendMessage() {
+
+  const input =
+    document.getElementById("messageInput");
+
+  const text =
+    input.value.trim();
+
+  if (!text || !currentChat) return;
+
+  const response =
+    await api(
+      "/api/messages/" +
+      currentChat,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          text
+        })
+      }
+    );
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    return alert(data.error);
+  }
+
+  input.value = "";
+
+  loadMessages();
+}
+
+async function loadChats() {
+
+  const list =
+    document.getElementById("chatList");
+
+  list.innerHTML = `
+    <div class="empty">
+      Para começar uma conversa,
+      abra um anúncio na OLX.
+    </div>
+  `;
+}
+
+async function logout() {
+
+  try {
+    await api(
+      "/api/logout",
+      {
+        method: "POST"
+      }
+    );
+  } catch {}
+
+  token = null;
+  user = null;
+
+  localStorage.removeItem("ca_token");
+  localStorage.removeItem("ca_user");
+
+  location.reload();
+}
+
+function escapeHTML(value) {
+
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function escapeJS(value) {
+
+  return String(value)
+    .replaceAll("\\", "\\\\")
+    .replaceAll("'", "\\'")
+    .replaceAll("\n", " ");
+}
+
+/* INÍCIO */
+
+if (token && user) {
+  start();
+} else {
+  document
+    .getElementById("loginScreen")
+    .classList.remove("hidden");
+}
+</script>
+
+</body>
+</html>
